@@ -1,7 +1,10 @@
+import numpy as np
+
+
 class Vertice:
 
-    def __init__(self, rotulo, distancia_objetivo):
-        self.rotulo = rotulo
+    def __init__(self, nome, distancia_objetivo):
+        self.nome = nome
         self.visitado = False
         self.distancia_objetivo = distancia_objetivo
         self.adjacentes = []
@@ -11,7 +14,7 @@ class Vertice:
 
     def mostra_adjacentes(self):
         for i in self.adjacentes:
-            print(i.vertice.rotulo, i.custo)
+            print(i.vertice.nome, i.custo)
 
 
 class Adjacente:
@@ -24,71 +27,70 @@ class Adjacente:
 
 
 class Grafo:
-    arad = Vertice('Arad', 366)
-    zerind = Vertice('Zerind', 374)
-    oradea = Vertice('Oradea', 380)
-    sibiu = Vertice('Sibiu', 253)
-    timisoara = Vertice('Timisoara', 329)
-    lugoj = Vertice('Lugoj', 244)
-    mehadia = Vertice('Mehadia', 241)
-    dobreta = Vertice('Dobreta', 242)
-    craiova = Vertice('Craiova', 160)
-    rimnicu = Vertice('Rimnicu', 193)
-    fagaras = Vertice('Fagaras', 178)
-    pitesti = Vertice('Pitesti', 98)
-    bucharest = Vertice('Bucharest', 0)
+    Montanhas_uivantes = Vertice('Montanhas Uivantes', 366)
+    Palthar = Vertice('Palthar', 374)
+    Hippiontar = Vertice('Hippiontar', 380)
+    Rhond = Vertice('Rhond', 253)
+    Altrim = Vertice('Altrim', 329)
+    Nova_malpetrim = Vertice('Nova Malpetrim', 244)
+    Nimbarann = Vertice('Nimbarann', 241)
+    Barud = Vertice('Barud', 242)
+    Thartann = Vertice('Thartann', 160)
+    Yuvalin = Vertice('Yuvalin', 193)
+    Kannilar = Vertice('Kannilar', 178)
+    Zakharin = Vertice('Zakharin', 98)
+    Valkaria = Vertice('Valkaria', 0)
     giurgiu = Vertice('Giurgiu', 77)
 
-    arad.adiciona_adjacente(Adjacente(zerind, 75))
-    arad.adiciona_adjacente(Adjacente(sibiu, 140))
-    arad.adiciona_adjacente(Adjacente(timisoara, 118))
+    Montanhas_uivantes.adiciona_adjacente(Adjacente(Palthar, 75))
+    Montanhas_uivantes.adiciona_adjacente(Adjacente(Rhond, 140))
+    Montanhas_uivantes.adiciona_adjacente(Adjacente(Altrim, 118))
 
-    zerind.adiciona_adjacente(Adjacente(arad, 75))
-    zerind.adiciona_adjacente(Adjacente(oradea, 71))
+    Palthar.adiciona_adjacente(Adjacente(Montanhas_uivantes, 75))
+    Palthar.adiciona_adjacente(Adjacente(Hippiontar, 71))
 
-    oradea.adiciona_adjacente(Adjacente(zerind, 71))
-    oradea.adiciona_adjacente(Adjacente(sibiu, 151))
+    Hippiontar.adiciona_adjacente(Adjacente(Palthar, 71))
+    Hippiontar.adiciona_adjacente(Adjacente(Rhond, 151))
 
-    sibiu.adiciona_adjacente(Adjacente(oradea, 151))
-    sibiu.adiciona_adjacente(Adjacente(arad, 140))
-    sibiu.adiciona_adjacente(Adjacente(fagaras, 99))
-    sibiu.adiciona_adjacente(Adjacente(rimnicu, 80))
+    Rhond.adiciona_adjacente(Adjacente(Hippiontar, 151))
+    Rhond.adiciona_adjacente(Adjacente(Montanhas_uivantes, 140))
+    Rhond.adiciona_adjacente(Adjacente(Kannilar, 99))
+    Rhond.adiciona_adjacente(Adjacente(Yuvalin, 80))
 
-    timisoara.adiciona_adjacente(Adjacente(arad, 118))
-    timisoara.adiciona_adjacente(Adjacente(lugoj, 111))
+    Altrim.adiciona_adjacente(Adjacente(Montanhas_uivantes, 118))
+    Altrim.adiciona_adjacente(Adjacente(Nova_malpetrim, 111))
 
-    lugoj.adiciona_adjacente(Adjacente(timisoara, 111))
-    lugoj.adiciona_adjacente(Adjacente(mehadia, 70))
+    Nova_malpetrim.adiciona_adjacente(Adjacente(Altrim, 111))
+    Nova_malpetrim.adiciona_adjacente(Adjacente(Nimbarann, 70))
 
-    mehadia.adiciona_adjacente(Adjacente(lugoj, 70))
-    mehadia.adiciona_adjacente(Adjacente(dobreta, 75))
+    Nimbarann.adiciona_adjacente(Adjacente(Nova_malpetrim, 70))
+    Nimbarann.adiciona_adjacente(Adjacente(Barud, 75))
 
-    dobreta.adiciona_adjacente(Adjacente(mehadia, 75))
-    dobreta.adiciona_adjacente(Adjacente(craiova, 120))
+    Barud.adiciona_adjacente(Adjacente(Nimbarann, 75))
+    Barud.adiciona_adjacente(Adjacente(Thartann, 120))
 
-    craiova.adiciona_adjacente(Adjacente(dobreta, 120))
-    craiova.adiciona_adjacente(Adjacente(pitesti, 138))
-    craiova.adiciona_adjacente(Adjacente(rimnicu, 146))
+    Thartann.adiciona_adjacente(Adjacente(Barud, 120))
+    Thartann.adiciona_adjacente(Adjacente(Zakharin, 138))
+    Thartann.adiciona_adjacente(Adjacente(Yuvalin, 146))
 
-    rimnicu.adiciona_adjacente(Adjacente(craiova, 146))
-    rimnicu.adiciona_adjacente(Adjacente(sibiu, 80))
-    rimnicu.adiciona_adjacente(Adjacente(pitesti, 97))
+    Yuvalin.adiciona_adjacente(Adjacente(Thartann, 146))
+    Yuvalin.adiciona_adjacente(Adjacente(Rhond, 80))
+    Yuvalin.adiciona_adjacente(Adjacente(Zakharin, 97))
 
-    fagaras.adiciona_adjacente(Adjacente(sibiu, 99))
-    fagaras.adiciona_adjacente(Adjacente(bucharest, 211))
+    Kannilar.adiciona_adjacente(Adjacente(Rhond, 99))
+    Kannilar.adiciona_adjacente(Adjacente(Valkaria, 211))
 
-    pitesti.adiciona_adjacente(Adjacente(rimnicu, 97))
-    pitesti.adiciona_adjacente(Adjacente(craiova, 138))
-    pitesti.adiciona_adjacente(Adjacente(bucharest, 101))
+    Zakharin.adiciona_adjacente(Adjacente(Yuvalin, 97))
+    Zakharin.adiciona_adjacente(Adjacente(Thartann, 138))
+    Zakharin.adiciona_adjacente(Adjacente(Valkaria, 101))
 
-    bucharest.adiciona_adjacente(Adjacente(fagaras, 211))
-    bucharest.adiciona_adjacente(Adjacente(pitesti, 101))
-    bucharest.adiciona_adjacente(Adjacente(giurgiu, 90))
+    Valkaria.adiciona_adjacente(Adjacente(Kannilar, 211))
+    Valkaria.adiciona_adjacente(Adjacente(Zakharin, 101))
+    Valkaria.adiciona_adjacente(Adjacente(giurgiu, 90))
 
 
 grafo = Grafo()
 
-import numpy as np
 
 class VetorOrdenado:
 
@@ -122,21 +124,16 @@ class VetorOrdenado:
             print('O vetor está vazio')
         else:
             for i in range(self.ultima_posicao + 1):
-                print(i, ' - ', self.valores[i].vertice.rotulo, ' - ',
+                print(i, ' - ', self.valores[i].vertice.nome, ' - ',
                       self.valores[i].custo, ' - ',
                       self.valores[i].vertice.distancia_objetivo, ' - ',
                       self.valores[i].distancia_aestrela)
 
 
-grafo.arad.adjacentes
-grafo.arad.adjacentes[0].vertice.rotulo, grafo.arad.adjacentes[0].vertice.distancia_objetivo
-
-grafo.arad.adjacentes[0].distancia_aestrela, grafo.arad.adjacentes[0].custo
-
 vetor = VetorOrdenado(20)
-vetor.insere(grafo.arad.adjacentes[0])
-vetor.insere(grafo.arad.adjacentes[1])
-vetor.insere(grafo.arad.adjacentes[2])
+vetor.insere(grafo.Montanhas_uivantes.adjacentes[0])
+vetor.insere(grafo.Montanhas_uivantes.adjacentes[1])
+vetor.insere(grafo.Montanhas_uivantes.adjacentes[2])
 
 vetor.imprime()
 
@@ -148,7 +145,7 @@ class AEstrela:
 
     def buscar(self, atual):
         print('------------------')
-        print('Atual: {}'.format(atual.rotulo))
+        print('Atual: {}'.format(atual.nome))
         atual.visitado = True
 
         if atual == self.objetivo:
@@ -165,5 +162,5 @@ class AEstrela:
                 self.buscar(vetor_ordenado.valores[0].vertice)
 
 
-busca_aestrela = AEstrela(grafo.bucharest)
-busca_aestrela.buscar(grafo.arad)
+busca_aestrela = AEstrela(grafo.Valkaria)
+busca_aestrela.buscar(grafo.Montanhas_uivantes)
