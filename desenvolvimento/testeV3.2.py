@@ -406,9 +406,10 @@ def switch(opcao):
 
 
 print(21*'-', 'CIDADES', 21*'-')
-print(f'1 - Valkaria{"9 - Montanhas uivantes(leste)":>39}\n2 - Palthar{"10 - Hippiontar":>26}\n'
-      f'3 - Rhond{"11 - Altrim":>24}\n4 - Nova Malpetrim{"12 - Nimbarann":>18}\n5 - Barud{"13 - Thartann":>26}\n'
-      f'6 - Yuvalin{"14 - Kannilar":>24}\n7 - Zakharin{"15 - Coridrian":>24}\n8 - Villent{"16 - Floresta Tollon":>31}')
+print(f'1 - Valkaria{"9 - Montanhas uivantes(leste)":>39}\n2 - Palthar{"10 - Hippiontar":>26}\n3 - Rhond'
+      f'{"11 - Altrim":>24}\n4 - Nova Malpetrim{"12 - Nimbarann":>18}\n5 - Barud{"13 - Thartann":>26}\n6 - Yuvalin'
+      f'{"14 - Kannilar":>24}\n7 - Zakharin{"15 - Coridrian":>24}\n8 - Villent{"16 - Floresta Tollon":>31}')
 print(51*'-')
 busca_aestrela = AEstrela(switch(int(input('Informe qual cidade deseja que seja o destino: '))))
 busca_aestrela.buscar(switch(int(input('Informe qual cidade deseja que seja a origem: '))))
+print('\n')
