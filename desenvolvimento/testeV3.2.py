@@ -370,7 +370,7 @@ class AEstrela:
                 self.buscar(vetor_ordenado.valores[0].vertice)
 
 
-def switch(opcao):
+def switch_cities(opcao):
     if opcao == 1:
         return grafo.Valkaria
     elif opcao == 2:
@@ -406,10 +406,22 @@ def switch(opcao):
 
 
 print(21*'-', 'CIDADES', 21*'-')
-print(f'1 - Valkaria{"9 - Montanhas uivantes(leste)":>39}\n2 - Palthar{"10 - Hippiontar":>26}\n3 - Rhond'
-      f'{"11 - Altrim":>24}\n4 - Nova Malpetrim{"12 - Nimbarann":>18}\n5 - Barud{"13 - Thartann":>26}\n6 - Yuvalin'
-      f'{"14 - Kannilar":>24}\n7 - Zakharin{"15 - Coridrian":>24}\n8 - Villent{"16 - Floresta Tollon":>31}')
+print(f'1 - Valkaria{"33 - Montanhas Uivantes(leste)":>42}\n2 - Palthar{"34 - Montanhas Uivantes(oeste)":>43}'
+      f'\n3 - Rhond{"34 - Montanhas Uivantes(sul)":>43}\n4 - Nova Malpetrim{"36 - Montanhas Uinvantes(norte)":>37}'
+      f'\n5 - Barud{"37 - Montanhas Uivantes(centro)":>46}\n6 - Yuvalin{"38 - Grande Savana(oeste)":>38}\n7 - Zakharin'
+      f'{"39 - Grande Savana(leste)":>37}\n8 - Villent{"40 - Grande Savana(centro)":>39}\n9 - Hippiontar'
+      f'{"41 - Montanhas Sanguinarias(sul)":>42}\n10 - Altrim{"42 - Montanhas Sanguinarias(centro)":>48}'
+      f'\n11 - Nimbarann{"43 - Montanhas Sanguinarias(norte)":>44}\n12 - Thartann'
+      f'{"44 - Deserto da Perdição(leste)":>42}\n13 - Kannilar{"45 - Deserto da Perdição(centro)":>43}\n14 - Coridrian'
+      f'{"46 - Deserto da Perdição(oeste)":>41}\n15 - Horeen{"47 - Ermos Púrpuras":>32}\n16 - Smokestone'
+      f'{"48 - Floresta Tollon":>29}\n17 - Giluk{"49 - Floresta das Escamas Verdes":>46}\n18 - Fross'
+      f'{"50 - A Cidade Normal dos Humanos":>46}\n19 - Yukadar{"51 - Khershandallas":>31}\n20 - Yuton'
+      f'{"52 - Cidade no Deserto":>36}\n21 - Roschfallen{"53 - Ruinas de Tyrondir":>31}\n22 - Norm'
+      f'{"54 - Imperio de Tauron(leste)":>44}\n23 - Milothiann{"55 - Imperio de Tauron(oeste)":>38}\n24 - Norba'
+      f'{"56 - Imperio de Tauron(centro)":>44}\n25 - Coravandor{"57 - Imperio de Tauron(norte)":>38}\n26 - Adhurian'
+      f'{"58 - Tiberus":>23}\n27 - Lannestul\n28 - Sternatchen\n29 - Khalifor\n30 - Lysianassa\n31 - Monte Palidor'
+      f'\n32 - Ghallistryx')
 print(51*'-')
-busca_aestrela = AEstrela(switch(int(input('Informe qual cidade deseja que seja o destino: '))))
-busca_aestrela.buscar(switch(int(input('Informe qual cidade deseja que seja a origem: '))))
+busca_aestrela = AEstrela(switch_cities(int(input('Informe qual cidade deseja que seja o destino: '))))
+busca_aestrela.buscar(switch_cities(int(input('Informe qual cidade deseja que seja a origem: '))))
 print('\n')
