@@ -376,7 +376,7 @@ class VetorOrdenado:
 
     def imprime(self):
         if self.ultima_posicao == -1:
-            print('O vetor está vazio')
+            return
         else:
             for i in range(self.ultima_posicao + 1):
                 print(i, ' - ', self.valores[i].vertice.nome, ' - ',
