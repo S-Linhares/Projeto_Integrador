@@ -18,9 +18,13 @@ print(f'1 - Valkaria{"33 - Montanhas Uivantes(leste)":>42}\n2 - Palthar{"34 - Mo
       f'{"58 - Tiberus":>23}\n27 - Lannestul\n28 - Sternatchen\n29 - Khalifor\n30 - Lysianassa\n31 - Monte Palidor'
       f'\n32 - Ghallistryx')
 print(59*'-')
-
 cidade_destino = int(input('Informe qual cidade deseja que seja o destino: '))
 cidade_origem = int(input('Informe qual cidade deseja que seja a origem: '))
+
+print(15*'-', 'TRANSPORTES', 15*'-')
+print(f'1 - A pé\n2 - A cavalo\n3 - Carruagem')
+print(41*'-')
+transporte_escolhido = int(input('Informe qual transporte deseja usar nesta viagem: '))
 
 
 class Vertice:
@@ -43,6 +47,10 @@ class Adjacente:
         self.vertice = vertice
         self.custo = custo
         self.transporte = transporte
+        if transporte[transporte_escolhido - 1] is not None:
+            self.dias = custo//transporte[transporte_escolhido - 1]
+        else:
+            self.dias = None
 
         # Novo atributo
         self.distancia_aestrela = vertice.distancia_objetivo + self.custo
@@ -438,7 +446,7 @@ class Grafo:
     Montanhas_uivantes_sul.adiciona_adjacente(Adjacente(Giluk, 390, ambiente('Montanha')))
 
     Montanhas_uivantes_norte.adiciona_adjacente(Adjacente(Montanhas_uivantes_centro, 420, ambiente('Montanha')))
-    Montanhas_uivantes_norte.adiciona_adjacente(Adjacente(Tauron_leste, 755, "Planicie"))
+    Montanhas_uivantes_norte.adiciona_adjacente(Adjacente(Tauron_leste, 755, ambiente("Planicie")))
 
     Montanhas_uivantes_centro.adiciona_adjacente(Adjacente(Montanhas_uivantes_leste, 730, ambiente('Montanha')))
     Montanhas_uivantes_centro.adiciona_adjacente(Adjacente(Montanhas_uivantes_sul, 485, ambiente('Montanha')))
@@ -698,12 +706,12 @@ class AEstrela:
         else:
             vetor_ordenado = VetorOrdenado(len(atual.adjacentes))
             for adjacente in atual.adjacentes:
-                if adjacente.vertice.visitado == False:
+                if adjacente.vertice.visitado is False:
                     adjacente.vertice.visitado = True
                     vetor_ordenado.insere(adjacente)
             vetor_ordenado.imprime()
 
-            if vetor_ordenado.valores[0] != None:
+            if vetor_ordenado.valores[0] is not None:
                 self.buscar(vetor_ordenado.valores[0].vertice)
 
 
