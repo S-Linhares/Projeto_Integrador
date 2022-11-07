@@ -49,8 +49,6 @@ class Adjacente:
         self.transporte = transporte
         if transporte[transporte_escolhido - 1] is not None:
             self.dias = custo//transporte[transporte_escolhido - 1]
-        else:
-            self.dias = None
 
         # Novo atributo
         self.distancia_aestrela = vertice.distancia_objetivo + self.custo
