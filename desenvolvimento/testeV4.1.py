@@ -55,6 +55,9 @@ class Adjacente:
 
 
 def switch_dist_zero(selecao):
+    # Lista de distancias em linha reta a partir de cada país. Na mesma ordem do menu de escolha. Com as distancias na
+    # na mesma ordem da classe 'grafo'.
+
     if selecao == 1:
         lista_zero = (750, 1800, 1250, 1500, 1300, 2900, 2250, 2750, 3690, 4190, 5000, 3750, 3250, 3750, 1995, 3250,
                       2540, 2985, 2200, 1700, 1650, 800, 2600, 1950, 1650, 1525, 825, 855, 675, 550, 0, 510, 480, 1205,
@@ -350,6 +353,9 @@ def switch_dist_zero(selecao):
 
 
 def ambiente(nome):
+    # Lista de quantos km cada meio de transporte faz, levando em conta o terreno passado. A ordem estabelecida é:
+    # 0 - a pé; 1 - a cavalo; 2 - a carruagem; 3 - Utilização de barco ou outra navegação.
+
     if nome == "Planicie":
         return [40, 64, 40, None]
     elif nome == "Deserto":
@@ -649,6 +655,7 @@ class Grafo:
 
 
 grafo = Grafo()
+aux = 0
 
 
 class VetorOrdenado:
