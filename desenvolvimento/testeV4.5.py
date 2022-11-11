@@ -360,19 +360,19 @@ def ambiente(nome):
     # 0 - a pé; 1 - a cavalo; 2 - a carruagem; 3 - Utilização de barco ou outra navegação.
 
     if nome == "Planicie":
-        return [40, 64, 40, None]
+        return [40, 64, 40, None, 'Planície']
     elif nome == "Deserto":
-        return [40, 64, None, None]
+        return [40, 64, None, None, 'Deserto']
     elif nome == "Floresta":
-        return [34, 52, None, None]
+        return [34, 52, None, None, 'Floresta']
     elif nome == "Pantano":
-        return [30, None, None, None]
+        return [30, None, None, None, 'Pântano']
     elif nome == "Tundra":
-        return [34, 52, None, None]
+        return [34, 52, None, None, 'Tundra']
     elif nome == "Montanha":
-        return [32, None, None, None]
+        return [32, None, None, None, 'Montanhoso']
     elif nome == "Oceano":
-        return [None, None, None, 84]
+        return [None, None, None, 84, 'Marítimo']
 
 
 class Grafo:
@@ -693,6 +693,7 @@ class VetorOrdenado:
             return
         else:
             print(f'{self.valores[0].vertice.nome}\nSerão percorridos {self.valores[0].custo}Km')
+            print(f'O terreno predominante nesta viagem é: {self.valores[0].transporte[4]}')
 
 
 class AEstrela:
