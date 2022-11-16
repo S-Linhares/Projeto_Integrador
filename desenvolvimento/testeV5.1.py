@@ -1,32 +1,5 @@
-# Versão final da ideia inicial
+# Versão 5 dedicada a tentar implementar um loop de repetição ao menu
 import numpy as np
-
-
-print(25*'-', 'CIDADES', 25*'-')
-print(f'1 - Valkaria{"33 - Montanhas Uivantes(leste)":>42}\n2 - Palthar{"34 - Montanhas Uivantes(oeste)":>43}'
-      f'\n3 - Rhond{"35 - Montanhas Uivantes(sul)":>43}\n4 - Nova Malpetrim{"36 - Montanhas Uinvantes(norte)":>37}'
-      f'\n5 - Barud{"37 - Montanhas Uivantes(centro)":>46}\n6 - Yuvalin{"38 - Grande Savana(oeste)":>38}\n7 - Zakharin'
-      f'{"39 - Grande Savana(leste)":>37}\n8 - Villent{"40 - Grande Savana(centro)":>39}\n9 - Hippiontar'
-      f'{"41 - Montanhas Sanguinarias(sul)":>42}\n10 - Altrim{"42 - Montanhas Sanguinarias(centro)":>48}'
-      f'\n11 - Nimbarann{"43 - Montanhas Sanguinarias(norte)":>44}\n12 - Thartann'
-      f'{"44 - Deserto da Perdição(leste)":>42}\n13 - Kannilar{"45 - Deserto da Perdição(centro)":>43}\n14 - Coridrian'
-      f'{"46 - Deserto da Perdição(oeste)":>41}\n15 - Horeen{"47 - Ermos Púrpuras":>32}\n16 - Smokestone'
-      f'{"48 - Floresta Tollon":>29}\n17 - Giluk{"49 - Floresta das Escamas Verdes":>46}\n18 - Fross'
-      f'{"50 - A Cidade Normal dos Humanos":>46}\n19 - Yukadar{"51 - Khershandallas":>31}\n20 - Yuton'
-      f'{"52 - Cidade no Deserto":>36}\n21 - Roschfallen{"53 - Ruinas de Tyrondir":>31}\n22 - Norm'
-      f'{"54 - Imperio de Tauron(leste)":>44}\n23 - Milothiann{"55 - Imperio de Tauron(oeste)":>38}\n24 - Norba'
-      f'{"56 - Imperio de Tauron(centro)":>44}\n25 - Coravandor{"57 - Imperio de Tauron(norte)":>38}\n26 - Adhurian'
-      f'{"58 - Tiberus":>23}\n27 - Lannestul\n28 - Sternatchen\n29 - Khalifor\n30 - Lysianassa\n31 - Monte Palidor'
-      f'\n32 - Ghallistryx')
-print(59*'-')
-cidade_destino = int(input('Informe qual cidade deseja que seja o destino: '))
-cidade_origem = int(input('Informe qual cidade deseja que seja a origem: '))
-
-print(23*'-', 'TRANSPORTES', 23*'-')
-print(f'1 - A pé{"2 - A cavalo":>25}{"3 - Carruagem":>25}')
-print(59*'-')
-transporte_escolhido = int(input('Informe qual transporte deseja usar nesta viagem: '))
-print('\n')
 
 
 class Vertice:
@@ -356,6 +329,9 @@ def switch_dist_zero(selecao):
     return lista_zero
 
 
+cidade_destino = 1
+
+
 def ambiente(nome):
     # Lista de quantos km cada meio de transporte faz, levando em conta o terreno passado. A ordem estabelecida é:
     # 0 - a pé; 1 - a cavalo; 2 - a carruagem; 3 - Utilização de barco ou outra navegação.
@@ -659,7 +635,6 @@ class Grafo:
 
 
 grafo = Grafo()
-aux = 0
 
 
 class VetorOrdenado:
@@ -689,12 +664,11 @@ class VetorOrdenado:
         self.valores[posicao] = adjacente
         self.ultima_posicao += 1
 
-    def imprime(self, dias_t):
+    def imprime(self):
         if self.ultima_posicao == -1:
             return
         else:
-            print(f'{self.valores[0].vertice.nome}\nSerão percorridos {self.valores[0].custo}Km '
-                  f'em {self.valores[0].dias[dias_t]} dias')
+            print(f'{self.valores[0].vertice.nome}\nSerão percorridos {self.valores[0].custo}Km')
             print(f'O terreno predominante nesta viagem é: {self.valores[0].transporte[4]}')
 
 
@@ -710,9 +684,9 @@ class AEstrela:
             self.preco_carruagem = 0
 
     def buscar(self, atual):
-        print(90*'-')
+        print(45*'-')
         if atual != self.objetivo:
-            print(f'\nViagem atual: partindo de {atual.nome} em direção a ', end='')
+            print(f'Viagem atual: partindo de {atual.nome} em direção a ', end='')
         else:
             print(f'Chegamos ao destino: {atual.nome}!!')
         atual.visitado = True
@@ -730,29 +704,28 @@ class AEstrela:
                 if adjacente.vertice.visitado is False:
                     adjacente.vertice.visitado = True
                     vetor_ordenado.insere(adjacente)
-            vetor_ordenado.imprime(self.transporte - 1)
+            vetor_ordenado.imprime()
 
             if vetor_ordenado.valores[0] is not None:
                 # Checagem se o transporte 'carruagem' é válido para o terreno a seguir, caso esteja sendo usado.
                 if (vetor_ordenado.valores[0].transporte[2] is None) and (self.transporte == 3):
-                    print('\nOBS: A partir deste ponto deverá seguir viagem a pé.\n'
-                          'Geografia a frente impossibilita viagem de carruagem.')
+                    print('OBS: A partir deste ponto deverá seguir viagem a pé. Geografia a frente impossibilita viagem'
+                          ' de carruagem.')
                     if self.preco_carruagem != 0:
                         self.carruagem = True
                     self.transporte = 1
                 # Checagem se o transporte 'cavalos' é válido para o terreno a seguir, caso esteja sendo usado.
                 if transporte_escolhido == 2:
                     if (vetor_ordenado.valores[0].transporte[1] is None) and (self.transporte == 2):
-                        print('\nOBS: a partir deste ponto deverá seguir viagem a pé.\n'
-                              'Geografia a frente impossibilita viagem a cavalos.')
+                        print('OBS: A partir deste ponto deverá seguir viagem a pé. Geografia a frente impossibilita '
+                              'viagem a cavalos.')
                         self.transporte = 1
                     elif (vetor_ordenado.valores[0].transporte[1] is not None) and (self.transporte == 1):
-                        print('\nOBS: a partir deste ponto você pode voltar a cavalgar seu cavalo.\n'
-                              'O terreno é propício')
+                        print('OBS: A partir deste ponto você pode voltar a cavalgar seu cavalo. O terreno é propício')
                         self.transporte = 2
                 # Checagem se o ambiente a frente necessita de embarcação para seguir em frente.
                 if vetor_ordenado.valores[0].transporte[3] is not None:
-                    print('\nOBS: a partir deste ponto deverá seguir viagem em um barco ou outro meio maritimo.')
+                    print('OBS: a partir deste ponto deverá seguir viagem em um barco ou outro meio maritimo.')
                     self.preco_carruagem += (vetor_ordenado.valores[0].custo * 0.1)
                     self.carruagem = True
                     self.transporte = 1
@@ -885,6 +858,38 @@ def switch_cities(opcao):
         return grafo.Tiberus
 
 
-busca_aestrela = AEstrela(switch_cities(cidade_destino), transporte_escolhido)
-busca_aestrela.buscar(switch_cities(cidade_origem))
-print('\n')
+while True:
+    print(25*'-', 'CIDADES', 25*'-')
+    print(f'1 - Valkaria{"33 - Montanhas Uivantes(leste)":>42}\n2 - Palthar{"34 - Montanhas Uivantes(oeste)":>43}'
+          f'\n3 - Rhond{"35 - Montanhas Uivantes(sul)":>43}\n4 - Nova Malpetrim{"36 - Montanhas Uinvantes(norte)":>37}'
+          f'\n5 - Barud{"37 - Montanhas Uivantes(centro)":>46}\n6 - Yuvalin{"38 - Grande Savana(oeste)":>38}'
+          f'\n7 - Zakharin{"39 - Grande Savana(leste)":>37}\n8 - Villent{"40 - Grande Savana(centro)":>39}'
+          f'\n9 - Hippiontar{"41 - Montanhas Sanguinarias(sul)":>42}\n10 - Altrim'
+          f'{"42 - Montanhas Sanguinarias(centro)":>48}\n11 - Nimbarann{"43 - Montanhas Sanguinarias(norte)":>44}'
+          f'\n12 - Thartann{"44 - Deserto da Perdição(leste)":>42}\n13 - Kannilar'
+          f'{"45 - Deserto da Perdição(centro)":>43}\n14 - Coridrian{"46 - Deserto da Perdição(oeste)":>41}'
+          f'\n15 - Horeen{"47 - Ermos Púrpuras":>32}\n16 - Smokestone{"48 - Floresta Tollon":>29}\n17 - Giluk'
+          f'{"49 - Floresta das Escamas Verdes":>46}\n18 - Fross{"50 - A Cidade Normal dos Humanos":>46}\n19 - Yukadar'
+          f'{"51 - Khershandallas":>31}\n20 - Yuton{"52 - Cidade no Deserto":>36}\n21 - Roschfallen'
+          f'{"53 - Ruinas de Tyrondir":>31}\n22 - Norm{"54 - Imperio de Tauron(leste)":>44}\n23 - Milothiann'
+          f'{"55 - Imperio de Tauron(oeste)":>38}\n24 - Norba{"56 - Imperio de Tauron(centro)":>44}\n25 - Coravandor'
+          f'{"57 - Imperio de Tauron(norte)":>38}\n26 - Adhurian{"58 - Tiberus":>23}\n27 - Lannestul\n28 - Sternatchen'
+          f'\n29 - Khalifor\n30 - Lysianassa\n31 - Monte Palidor\n32 - Ghallistryx')
+    print(59*'-')
+    cidade_destino = int(input('Informe qual cidade deseja que seja o destino: '))
+    grafo.lista = switch_dist_zero(cidade_destino)
+    cidade_origem = int(input('Informe qual cidade deseja que seja a origem: '))
+
+    print(15*'-', 'TRANSPORTES', 15*'-')
+    print(f'1 - A pé\n2 - A cavalo\n3 - Carruagem')
+    print(41*'-')
+    transporte_escolhido = int(input('Informe qual transporte deseja usar nesta viagem: '))
+    print('\n')
+
+    busca_aestrela = AEstrela(switch_cities(cidade_destino), transporte_escolhido)
+    busca_aestrela.buscar(switch_cities(cidade_origem))
+    print('\n')
+    continuar = input('Deseja fazer mais alguma viagem?[S/N]   ').upper()
+    if continuar == 'N':
+        print('Encerrando o programa...')
+        break

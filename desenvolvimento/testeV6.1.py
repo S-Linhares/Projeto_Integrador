@@ -1,4 +1,4 @@
-# Versão final da ideia inicial
+# Versão 6 dedicada a tentativa de implementação de uma interface web
 import numpy as np
 
 
@@ -22,9 +22,9 @@ print(59*'-')
 cidade_destino = int(input('Informe qual cidade deseja que seja o destino: '))
 cidade_origem = int(input('Informe qual cidade deseja que seja a origem: '))
 
-print(23*'-', 'TRANSPORTES', 23*'-')
-print(f'1 - A pé{"2 - A cavalo":>25}{"3 - Carruagem":>25}')
-print(59*'-')
+print(15*'-', 'TRANSPORTES', 15*'-')
+print(f'1 - A pé\n2 - A cavalo\n3 - Carruagem')
+print(41*'-')
 transporte_escolhido = int(input('Informe qual transporte deseja usar nesta viagem: '))
 print('\n')
 
@@ -689,12 +689,11 @@ class VetorOrdenado:
         self.valores[posicao] = adjacente
         self.ultima_posicao += 1
 
-    def imprime(self, dias_t):
+    def imprime(self):
         if self.ultima_posicao == -1:
             return
         else:
-            print(f'{self.valores[0].vertice.nome}\nSerão percorridos {self.valores[0].custo}Km '
-                  f'em {self.valores[0].dias[dias_t]} dias')
+            print(f'{self.valores[0].vertice.nome}\nSerão percorridos {self.valores[0].custo}Km')
             print(f'O terreno predominante nesta viagem é: {self.valores[0].transporte[4]}')
 
 
@@ -710,9 +709,9 @@ class AEstrela:
             self.preco_carruagem = 0
 
     def buscar(self, atual):
-        print(90*'-')
+        print(45*'-')
         if atual != self.objetivo:
-            print(f'\nViagem atual: partindo de {atual.nome} em direção a ', end='')
+            print(f'Viagem atual: partindo de {atual.nome} em direção a ', end='')
         else:
             print(f'Chegamos ao destino: {atual.nome}!!')
         atual.visitado = True
@@ -730,29 +729,28 @@ class AEstrela:
                 if adjacente.vertice.visitado is False:
                     adjacente.vertice.visitado = True
                     vetor_ordenado.insere(adjacente)
-            vetor_ordenado.imprime(self.transporte - 1)
+            vetor_ordenado.imprime()
 
             if vetor_ordenado.valores[0] is not None:
                 # Checagem se o transporte 'carruagem' é válido para o terreno a seguir, caso esteja sendo usado.
                 if (vetor_ordenado.valores[0].transporte[2] is None) and (self.transporte == 3):
-                    print('\nOBS: A partir deste ponto deverá seguir viagem a pé.\n'
-                          'Geografia a frente impossibilita viagem de carruagem.')
+                    print('OBS: A partir deste ponto deverá seguir viagem a pé. Geografia a frente impossibilita viagem'
+                          ' de carruagem.')
                     if self.preco_carruagem != 0:
                         self.carruagem = True
                     self.transporte = 1
                 # Checagem se o transporte 'cavalos' é válido para o terreno a seguir, caso esteja sendo usado.
                 if transporte_escolhido == 2:
                     if (vetor_ordenado.valores[0].transporte[1] is None) and (self.transporte == 2):
-                        print('\nOBS: a partir deste ponto deverá seguir viagem a pé.\n'
-                              'Geografia a frente impossibilita viagem a cavalos.')
+                        print('OBS: A partir deste ponto deverá seguir viagem a pé. Geografia a frente impossibilita '
+                              'viagem a cavalos.')
                         self.transporte = 1
                     elif (vetor_ordenado.valores[0].transporte[1] is not None) and (self.transporte == 1):
-                        print('\nOBS: a partir deste ponto você pode voltar a cavalgar seu cavalo.\n'
-                              'O terreno é propício')
+                        print('OBS: A partir deste ponto você pode voltar a cavalgar seu cavalo. O terreno é propício')
                         self.transporte = 2
                 # Checagem se o ambiente a frente necessita de embarcação para seguir em frente.
                 if vetor_ordenado.valores[0].transporte[3] is not None:
-                    print('\nOBS: a partir deste ponto deverá seguir viagem em um barco ou outro meio maritimo.')
+                    print('OBS: a partir deste ponto deverá seguir viagem em um barco ou outro meio maritimo.')
                     self.preco_carruagem += (vetor_ordenado.valores[0].custo * 0.1)
                     self.carruagem = True
                     self.transporte = 1
