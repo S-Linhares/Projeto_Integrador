@@ -5,19 +5,13 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
-@app.route('/')
-def raiz():
-    preenchendo = 0
-    return render_template('index.html', pr=preenchendo)
-
-
-@app.route('/resultado', methods=['GET'])  # method informa os metodos aceitaveis nesta rota
+@app.route('/', methods=['GET', 'POST'])  # method informa os metodos aceitaveis nesta rota
 def resultado():
-    preenchendo = 1
-    cidade_destino = int(request.args.get('nome_destino'))
-    cidade_origem = int(request.args.get('nome_inicio'))
-    transporte_escolhido = int(request.args.get('transporte'))
-    print('\n')
+    if request.method == "GET":
+        return render_template('index.html')
+    cidade_destino = int(request.form.get('nome_destino'))
+    cidade_origem = int(request.form.get('nome_inicio'))
+    transporte_escolhido = int(request.form.get('transporte'))
 
     class Vertice:
         def __init__(self, nome, distancia_objetivo):
@@ -48,7 +42,6 @@ def resultado():
 
     def switch_dist_zero(selecao):
         # Lista de distancias em linha reta a partir de cada país. Na mesma ordem do menu de escolha. Com as distancias
-        # na
         # na mesma ordem da classe 'grafo'.
 
         if selecao == 1:
@@ -646,6 +639,10 @@ def resultado():
 
     grafo = Grafo()
 
+    def detalhes(valores, parametros):
+        parametros['terreno_percorrido'].append(f'{valores[0].vertice.nome}\nSerão percorridos {valores[0].custo}Km\nO '
+                                                f'terreno predominante nesta viagem é: {valores[0].transporte[4]}')
+
     class VetorOrdenado:
 
         def __init__(self, capacidade):
@@ -673,12 +670,39 @@ def resultado():
             self.valores[posicao] = adjacente
             self.ultima_posicao += 1
 
-        def imprime(self):
+        def imprime(self, parametros):
             if self.ultima_posicao == -1:
                 return
             else:
-                print(f'{self.valores[0].vertice.nome}\nSerão percorridos {self.valores[0].custo}Km')
-                print(f'O terreno predominante nesta viagem é: {self.valores[0].transporte[4]}')
+                detalhes(self.valores, parametros)
+
+    def viagem_atual(atual, objetivo, parametros):
+        if atual != objetivo:
+            parametros['atual'].append(f'{40*"-"}\nViagem atual: partindo de {atual.nome} em direção a ')
+        else:
+            parametros['atual'].append(f'{40*"-"}\nChegamos ao destino: {atual.nome}!!')
+
+    def chegada(custo_dias, quilometragem, carruagem, preco_carruagem, parametros):
+        if carruagem is True:
+            parametros['viagem_final'].append(f'Dias totais de viagem: {custo_dias}\nTotal de quilómetros percorridos '
+                                              f'nesta viagem: {quilometragem}Km\nTotal a pagar pela viagem de carruagem'
+                                              f' e/ou outros meios de transporte: T${preco_carruagem} ou '
+                                              f'TO${preco_carruagem / 10}')
+        else:
+            parametros['viagem_final'].append(f'Dias totais de viagem: {custo_dias}\nTotal de quilómetros percorridos '
+                                              f'nesta viagem: {quilometragem}Km')
+
+    def checa_carruagem(parametros):
+        parametros['carruagem_check'].append('OBS: A partir deste ponto deverá seguir viagem a pé. Geografia a frente '
+                                             'impossibilita viagem de carruagem.')
+
+    def checa_cavalo(parametros):
+        parametros['cavalo_check'].append('OBS: A partir deste ponto deverá seguir viagem a pé. Geografia a frente '
+                                          'impossibilita viagem a cavalos.')
+
+    def checa_mar(parametros):
+        parametros['mar_check'].append('OBS: a partir deste ponto deverá seguir viagem em um barco ou outro meio '
+                                       'maritimo.')
 
     class AEstrela:
         def __init__(self, objetivo, transporte):
@@ -688,51 +712,57 @@ def resultado():
             self.transporte = transporte
             self.carruagem = False
             self.quilometragem = 0
-            if self.transporte == 3 or cidade_origem == 30:
-                self.preco_carruagem = 0
+            self.preco_carruagem = 0
+            self.parametros = {'atual': [], 'terreno_percorrido': [], 'carruagem_check': [], 'cavalo_check': [],
+                               'mar_check': [], 'viagem_final': []}
+            self.rep = 1
 
         def buscar(self, atual):
-            print(45*'-')
-            if atual != self.objetivo:
-                print(f'Viagem atual: partindo de {atual.nome} em direção a ', end='')
-            else:
-                print(f'Chegamos ao destino: {atual.nome}!!')
+            viagem_atual(atual, self.objetivo, self.parametros)
             atual.visitado = True
 
             if atual == self.objetivo:
                 self.encontrado = True
-                print(f'Dias totais de viagem: {self.custo_dias}')
-                print(f'Total de quilómetros percorridos nesta viagem: {self.quilometragem}Km')
-                if self.carruagem is True:
-                    print(f'Total a pagar pela viagem de carruagem e/ou outros meios de transporte: T$'
-                          f'{self.preco_carruagem} ou TO${self.preco_carruagem/10}')
+                chegada(self.custo_dias, self.quilometragem, self.carruagem, self.preco_carruagem, self.parametros)
+                self.parametros['terreno_percorrido'].append(0)
+                self.parametros['carruagem_check'].append(0)
+                self.parametros['cavalo_check'].append(0)
+                self.parametros['mar_check'].append(0)
+                # fim do programa
+                i = 0
+                return render_template('index.html', viagem=self.parametros, reps=self.rep, i=i)
             else:
+                self.parametros['viagem_final'].append(0)
                 vetor_ordenado = VetorOrdenado(len(atual.adjacentes))
                 for adjacente in atual.adjacentes:
                     if adjacente.vertice.visitado is False:
                         adjacente.vertice.visitado = True
                         vetor_ordenado.insere(adjacente)
-                vetor_ordenado.imprime()
+                vetor_ordenado.imprime(self.parametros)
 
                 if vetor_ordenado.valores[0] is not None:
                     # Checagem se o transporte 'carruagem' é válido para o terreno a seguir, caso esteja sendo usado.
                     if (vetor_ordenado.valores[0].transporte[2] is None) and (self.transporte == 3):
-                        print('OBS: A partir deste ponto deverá seguir viagem a pé. Geografia a frente impossibilita '
-                              'viagem de carruagem.')
+                        checa_carruagem(self.parametros)
                         if self.preco_carruagem != 0:
                             self.carruagem = True
                         self.transporte -= 2
+                    else:
+                        self.parametros['carruagem_check'].append(0)
                     # Checagem se o transporte 'cavalos' é válido para o terreno a seguir, caso esteja sendo usado.
                     if (vetor_ordenado.valores[0].transporte[1] is None) and (self.transporte == 2):
-                        print('OBS: A partir deste ponto deverá seguir viagem a pé. Geografia a frente impossibilita '
-                              'viagem a cavalos.')
+                        checa_cavalo(self.parametros)
                         self.transporte -= 1
+                    else:
+                        self.parametros['cavalo_check'].append(0)
                     # Checagem se o ambiente a frente necessita de embarcação para seguir em frente.
                     if vetor_ordenado.valores[0].transporte[3] is not None:
-                        print('OBS: a partir deste ponto deverá seguir viagem em um barco ou outro meio maritimo.')
+                        checa_mar(self.parametros)
                         self.preco_carruagem += (vetor_ordenado.valores[0].custo * 0.1)
                         self.carruagem = True
                         self.transporte = 1
+                    else:
+                        self.parametros['mar_check'].append(0)
                     # Calculo de custo a pagar a carruagem pelo transporte, caso esteja sendo usado.
                     if self.transporte == 3:
                         self.preco_carruagem += vetor_ordenado.valores[0].custo
@@ -740,6 +770,7 @@ def resultado():
                     self.quilometragem += vetor_ordenado.valores[0].custo
                     # Calculo de total de dias de viagem
                     self.custo_dias += vetor_ordenado.valores[0].dias[self.transporte - 1]
+                    self.rep += 1
                     self.buscar(vetor_ordenado.valores[0].vertice)
 
     def switch_cities(opcao):
