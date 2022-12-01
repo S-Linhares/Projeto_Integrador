@@ -55,6 +55,22 @@ main > div > h2 {
     max-width: 1000px;
 }
 
+.tormenta {
+    color: red;
+    text-shadow: 1px 1px 0px black;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tormenta_txt {
+    text-indent: 10px;
+}
+
+#final {
+    font-weight: bold;
+    color: red;
+}
+
 .forma{
     max-width: 1000px;
     display: inline;
@@ -63,10 +79,11 @@ main > div > h2 {
 #inferno {
     float: right;
     height: 200px;
-    width: 400px;
+    width: 600px;
     border: 1px solid;
     border-color: black;
     overflow-y: scroll;
+    padding-left: 4px;
 }
 
 #desc {

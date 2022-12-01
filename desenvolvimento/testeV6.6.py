@@ -651,7 +651,7 @@ def resultado():
     grafo = Grafo()
 
     def detalhes(valores, parametro):
-        parametro['terreno_percorrido'] = f'{valores[0].vertice.nome}\nSerão percorridos {valores[0].custo}Km\nO ' \
+        parametro['terreno_percorrido'] = f'{valores[0].vertice.nome}. Serão percorridos {valores[0].custo}Km. O ' \
                                           f'terreno predominante nesta viagem é: {valores[0].transporte[4]}'
 
     class VetorOrdenado:
@@ -689,18 +689,18 @@ def resultado():
 
     def viagem_atual(atual, objetivo, parametro):
         if atual != objetivo:
-            parametro['atual'] = f'{40 * "-"}\nViagem atual: partindo de {atual.nome} em direção a '
+            parametro['atual'] = f'Viagem atual: partindo de {atual.nome} em direção a '
         else:
-            parametro['atual'] = f'{40 * "-"}\nChegamos ao destino: {atual.nome}!!'
+            parametro['atual'] = f'Chegamos ao destino: {atual.nome}!!'
 
     def chegada(custo_dias, quilometragem, carruagem, preco_carruagem, parametro):
         if carruagem is True:
-            parametro['viagem_final'] = f'Dias totais de viagem: {custo_dias}\nTotal de quilómetros percorridos ' \
-                                        f'nesta viagem: {quilometragem}Km\nTotal a pagar pela viagem de carruagem ' \
+            parametro['viagem_final'] = f'Dias totais de viagem: {custo_dias}. Total de quilómetros percorridos ' \
+                                        f'nesta viagem: {quilometragem}Km. Total a pagar pela viagem de carruagem ' \
                                         f'e/ou outros meios de transporte: T${preco_carruagem} ou ' \
                                         f'TO${preco_carruagem / 10}'
         else:
-            parametro['viagem_final'] = f'Dias totais de viagem: {custo_dias}\nTotal de quilómetros percorridos ' \
+            parametro['viagem_final'] = f'Dias totais de viagem: {custo_dias}. Total de quilómetros percorridos ' \
                                         f'nesta viagem: {quilometragem}Km'
 
     class AEstrela:
@@ -712,14 +712,13 @@ def resultado():
             self.carruagem = False
             self.quilometragem = 0
             self.preco_carruagem = 0
-            self.parametros = []
             self.parametro = {'atual': '', 'terreno_percorrido': '', 'carruagem_check': '', 'cavalo_check': '',
                               'mar_check': '', 'viagem_final': ''}
             self.rep = 0
 
         def buscar(self, atual):
             if self.rep > 0:
-                self.parametros.append(self.parametro.copy())
+                viagem.append(self.parametro.copy())
             viagem_atual(atual, self.objetivo, self.parametro)
             atual.visitado = True
 
@@ -730,11 +729,10 @@ def resultado():
                 self.parametro['carruagem_check'] = 'none'
                 self.parametro['cavalo_check'] = 'none'
                 self.parametro['mar_check'] = 'none'
-                self.parametros.append(self.parametro.copy())
+                viagem.append(self.parametro.copy())
                 # fim do programa
                 print('printando retorno')
-                print(self.parametros)
-                viagem.append(self.parametros)
+                print(viagem)
             else:
                 self.parametro['viagem_final'] = 'none'
                 vetor_ordenado = VetorOrdenado(len(atual.adjacentes))
@@ -901,6 +899,9 @@ def resultado():
     busca_aestrela.buscar(switch_cities(cidade_origem))
     print(viagem)
     return render_template('index.html', viagem=viagem)
+
+
+viagem.clear()
 
 
 app.run(debug=True)

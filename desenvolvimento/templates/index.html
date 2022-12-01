@@ -23,13 +23,25 @@
       <div>
           <h2>Marque os locais de inicio e destino de sua viagem!</h2>
           <div id="inferno">
-            {%for i in viagem%}
-              {%for v in i.values()%}
-                {%if v != 'none'%}
-                    <p>{{v}}</p>
-                {%endif%}
-              {%endfor%}
-            {%endfor%}
+            <h3 class="tormenta">Iniciando uma nova viagem!!!</h3>
+            {% for jornada in viagem %}
+              <p class="tormenta_txt">{{jornada.atual}}
+              {% if jornada.terreno_percorrido != 'none' %}
+                {{jornada.terreno_percorrido}}</p>
+              {% endif %}
+              {% if jornada.carruagem_check != 'none' %}
+                <p class="tormenta_txt">{{jornada.carruagem_check}}</p>
+              {% endif %}
+              {% if jornada.cavalo_check != 'none' %}
+                <p class="tormenta_txt">{{jornada.cavalo_check}}</p>
+              {% endif %}
+              {% if jornada.mar_check != 'none' %}
+                <p class="tormenta_txt">{{jornada.mar_check}}</p>
+              {% endif %}
+              {% if jornada.viagem_final != 'none' %}
+                <p class="tormenta_txt" id="final">{{jornada.viagem_final}}</p>
+              {% endif %}
+            {% endfor %}
           </div>
           <form action="{{ url_for('resultado') }}" class="forma" method="POST">
               <p>
