@@ -414,7 +414,7 @@ class Grafo:
     Villent = Vertice('Villent', lista[32])
     Floresta_Tollon = Vertice('Floresta de Tollon', lista[33])
     Horeen = Vertice('Horeen', lista[34]*10)
-    Smokestone = Vertice('Smokestone', lista[35])
+    Smokestone = Vertice('Smokestone', lista[35]*10)
     Giluk = Vertice('Giluk', lista[36])
     Fross = Vertice('Fross', lista[37])
     Yukadar = Vertice('Yukadar', lista[38])
@@ -619,9 +619,9 @@ class Grafo:
 
     Norba.adiciona_adjacente(Adjacente(Yukadar, 300, ambiente('Floresta')))
     Norba.adiciona_adjacente(Adjacente(Floresta_Verde, 590, ambiente('Floresta')))
-    Norba.adiciona_adjacente(Adjacente(Cidade_humanos, 980, ambiente('Planicie')))
+    Norba.adiciona_adjacente(Adjacente(Cidade_humanos, 553, ambiente('Planicie')))
 
-    Cidade_humanos.adiciona_adjacente(Adjacente(Norba, 980, ambiente('Planicie')))
+    Cidade_humanos.adiciona_adjacente(Adjacente(Norba, 553, ambiente('Planicie')))
     Cidade_humanos.adiciona_adjacente(Adjacente(Coravandor, 475, ambiente('Planicie')))
 
     Coravandor.adiciona_adjacente(Adjacente(Cidade_humanos, 475, ambiente('Planicie')))

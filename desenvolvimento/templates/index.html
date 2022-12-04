@@ -4,7 +4,7 @@
     <meta charset="UTF-8" name="viweport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ url_for('static', filename = 'tormenta_logo.ico')}}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename = 'estilos_tormenta.css')}}">
-    <title>Projeto</title>
+    <title>Calculador de rotas: Tormenta</title>
     <style>
         img {
             width: 100%;
@@ -22,7 +22,7 @@
   <main>
       <div>
           <h2>Marque os locais de inicio e destino de sua viagem!</h2>
-          <div id="inferno">
+          <div id="viagem">
             <h3 class="tormenta">Iniciando uma nova viagem!!!</h3>
             {% for jornada in viagem %}
               <p class="tormenta_txt">{{jornada.atual}}
@@ -30,13 +30,13 @@
                 {{jornada.terreno_percorrido}}</p>
               {% endif %}
               {% if jornada.carruagem_check != 'none' %}
-                <p class="tormenta_txt">{{jornada.carruagem_check}}</p>
+                <p class="tormenta_txt observacao">{{jornada.carruagem_check}}</p>
               {% endif %}
               {% if jornada.cavalo_check != 'none' %}
-                <p class="tormenta_txt">{{jornada.cavalo_check}}</p>
+                <p class="tormenta_txt observacao">{{jornada.cavalo_check}}</p>
               {% endif %}
               {% if jornada.mar_check != 'none' %}
-                <p class="tormenta_txt">{{jornada.mar_check}}</p>
+                <p class="tormenta_txt observacao">{{jornada.mar_check}}</p>
               {% endif %}
               {% if jornada.viagem_final != 'none' %}
                 <p class="tormenta_txt" id="final">{{jornada.viagem_final}}</p>
