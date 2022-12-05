@@ -5,7 +5,7 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
-@app.route('/index', methods=['GET', 'POST'])
+@app.route('/')
 def raiz():
     return render_template('index.html')
 
